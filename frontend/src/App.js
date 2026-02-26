@@ -1,14 +1,18 @@
-import { PipelineToolbar } from './toolbar';
-import { PipelineUI } from './ui';
-import { SubmitButton } from './submit';
+import React from 'react';
+import { Toolbar } from './components/Toolbar';
+import { PipelineCanvas } from './components/PipelineCanvas';
+import { SubmitButton } from './components/SubmitButton';
+import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
   return (
-    <div>
-      <PipelineToolbar />
-      <PipelineUI />
-      <SubmitButton />
-    </div>
+    <ThemeProvider>
+      <div className="app">
+        <Toolbar />
+        <PipelineCanvas />
+        <SubmitButton />
+      </div>
+    </ThemeProvider>
   );
 }
 

@@ -1,34 +1,20 @@
-// llmNode.js
+import React from 'react';
+import { Position } from 'reactflow';
+import { BaseNode } from './BaseNode';
 
-import { Handle, Position } from 'reactflow';
-
-export const LLMNode = ({ id, data }) => {
+export const LLMNode = ({ id }) => {
+  const handles = [
+    { type: 'target', position: Position.Left, id: `${id}-system`, style: { top: '33%' } },
+    { type: 'target', position: Position.Left, id: `${id}-prompt`, style: { top: '66%' } },
+    { type: 'source', position: Position.Right, id: `${id}-response` },
+  ];
 
   return (
-    <div style={{width: 200, height: 80, border: '1px solid black'}}>
-      <Handle
-        type="target"
-        position={Position.Left}
-        id={`${id}-system`}
-        style={{top: `${100/3}%`}}
-      />
-      <Handle
-        type="target"
-        position={Position.Left}
-        id={`${id}-prompt`}
-        style={{top: `${200/3}%`}}
-      />
-      <div>
-        <span>LLM</span>
+    <BaseNode id={id} title="LLM" icon="🧠" handles={handles} className="node-llm">
+      <div className="node-info-text">
+        <span className="node-badge">GPT-4</span>
+        <p>Processes system prompt and user prompt to generate a response.</p>
       </div>
-      <div>
-        <span>This is a LLM.</span>
-      </div>
-      <Handle
-        type="source"
-        position={Position.Right}
-        id={`${id}-response`}
-      />
-    </div>
+    </BaseNode>
   );
-}
+};
