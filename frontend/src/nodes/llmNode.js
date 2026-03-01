@@ -9,8 +9,12 @@ export const LLMNode = ({ id }) => {
     { type: 'source', position: Position.Right, id: `${id}-response` },
   ];
 
+  const outputs = [
+    { name: 'response', type: 'Text', description: 'Generated response from the model' },
+  ];
+
   return (
-    <BaseNode id={id} title="LLM" icon="🧠" handles={handles} className="node-llm">
+    <BaseNode id={id} title="LLM" icon="🧠" handles={handles} className="node-llm" outputs={outputs}>
       <div className="node-info-text">
         <span className="node-badge">GPT-4</span>
         <p>Processes system prompt and user prompt to generate a response.</p>

@@ -13,12 +13,18 @@ export const SubmitButton = () => {
 
   const handleSubmit = async () => {
     try {
+      const pipelineNodes = nodes.filter((n) => n.type !== 'note');
+      const pipelineNodeIds = new Set(pipelineNodes.map((n) => n.id));
+      const pipelineEdges = edges.filter(
+        (e) => pipelineNodeIds.has(e.source) && pipelineNodeIds.has(e.target)
+      );
+
       const response = await fetch('http://localhost:8000/pipelines/parse', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          nodes: nodes.map((n) => ({ id: n.id, type: n.type, data: n.data })),
-          edges: edges.map((e) => ({ source: e.source, target: e.target })),
+          nodes: pipelineNodes.map((n) => ({ id: n.id, type: n.type, data: n.data })),
+          edges: pipelineEdges.map((e) => ({ source: e.source, target: e.target })),
         }),
       });
 
@@ -37,7 +43,7 @@ export const SubmitButton = () => {
     <>
       <div className="submit-bar">
         <button className="submit-button" onClick={handleSubmit}>
-          <span>▶</span> Submit Pipeline
+            Submit Pipeline
         </button>
       </div>
 

@@ -12,8 +12,13 @@ export const APICallNode = ({ id }) => {
     { type: 'source', position: Position.Right, id: `${id}-response` },
   ];
 
+  const outputs = [
+    { name: 'response', type: 'Text', description: 'The API response body' },
+    { name: 'status', type: 'Text', description: 'HTTP status code' },
+  ];
+
   return (
-    <BaseNode id={id} title="API Call" handles={handles} className="node-api">
+    <BaseNode id={id} title="API Call" handles={handles} className="node-api" outputs={outputs}>
       <NodeField label="Method">
         <select value={method} onChange={(e) => setMethod(e.target.value)} className="node-select">
           <option value="GET">GET</option>

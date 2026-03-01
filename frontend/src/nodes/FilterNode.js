@@ -13,8 +13,13 @@ export const FilterNode = ({ id }) => {
     { type: 'source', position: Position.Right, id: `${id}-failed`, style: { top: '66%' } },
   ];
 
+  const outputs = [
+    { name: 'passed', type: 'Text', description: 'Items that matched the filter' },
+    { name: 'failed', type: 'Text', description: 'Items that did not match' },
+  ];
+
   return (
-    <BaseNode id={id} title="Filter" handles={handles} className="node-filter">
+    <BaseNode id={id} title="Filter" handles={handles} className="node-filter" outputs={outputs}>
       <NodeField label="Field">
         <AutoResizeInput value={field} onChange={setField} placeholder="e.g. status" />
       </NodeField>

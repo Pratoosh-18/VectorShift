@@ -12,8 +12,12 @@ export const MergerNode = ({ id }) => {
     { type: 'source', position: Position.Right, id: `${id}-merged` },
   ];
 
+  const outputs = [
+    { name: 'merged', type: 'Text', description: 'The merged result of both inputs' },
+  ];
+
   return (
-    <BaseNode id={id} title="Merger" handles={handles} className="node-merger">
+    <BaseNode id={id} title="Merger" handles={handles} className="node-merger" outputs={outputs}>
       <NodeField label="Strategy">
         <select value={strategy} onChange={(e) => setStrategy(e.target.value)} className="node-select">
           <option value="concat">Concatenate</option>

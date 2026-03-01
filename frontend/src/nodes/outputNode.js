@@ -10,8 +10,12 @@ export const OutputNode = ({ id, data }) => {
     { type: 'target', position: Position.Left, id: `${id}-value` },
   ];
 
+  const outputs = [
+    { name: 'text', type: 'Text', description: 'The text that was passed in' },
+  ];
+
   return (
-    <BaseNode id={id} title="Output" handles={handles} className="node-output">
+    <BaseNode id={id} title="Output" handles={handles} className="node-output" outputs={outputs}>
       <NodeField label="Name">
         <AutoResizeInput value={currName} onChange={setCurrName} />
       </NodeField>

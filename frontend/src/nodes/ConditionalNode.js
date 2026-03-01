@@ -11,8 +11,13 @@ export const ConditionalNode = ({ id }) => {
     { type: 'source', position: Position.Right, id: `${id}-false`, style: { top: '66%' } },
   ];
 
+  const outputs = [
+    { name: 'true', type: 'Text', description: 'Output when condition is true' },
+    { name: 'false', type: 'Text', description: 'Output when condition is false' },
+  ];
+
   return (
-    <BaseNode id={id} title="Conditional" handles={handles} className="node-conditional">
+    <BaseNode id={id} title="Conditional" handles={handles} className="node-conditional" outputs={outputs}>
       <NodeField label="If condition">
         <AutoResizeInput value={condition} onChange={setCondition} placeholder="e.g. length > 100" />
       </NodeField>

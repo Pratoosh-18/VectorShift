@@ -46,6 +46,29 @@ export const useStore = create((set, get) => ({
     });
   },
 
+  addEdgeByConnection: (connection) => {
+    const edges = get().edges;
+    const exists = edges.some(
+      (e) =>
+        e.source === connection.source &&
+        e.target === connection.target &&
+        e.sourceHandle === connection.sourceHandle &&
+        e.targetHandle === connection.targetHandle
+    );
+    if (exists) return;
+    set({
+      edges: addEdge(
+        {
+          ...connection,
+          type: 'deletable',
+          animated: true,
+          markerEnd: { type: MarkerType.Arrow, height: '20px', width: '20px' },
+        },
+        edges
+      ),
+    });
+  },
+
   removeEdge: (edgeId) => {
     set({ edges: get().edges.filter((e) => e.id !== edgeId) });
   },
@@ -59,12 +82,11 @@ export const useStore = create((set, get) => ({
 
   updateNodeField: (nodeId, fieldName, fieldValue) => {
     set({
-      nodes: get().nodes.map((node) => {
-        if (node.id === nodeId) {
-          node.data = { ...node.data, [fieldName]: fieldValue };
-        }
-        return node;
-      }),
+      nodes: get().nodes.map((node) =>
+        node.id === nodeId
+          ? { ...node, data: { ...node.data, [fieldName]: fieldValue } }
+          : node
+      ),
     });
   },
 }));

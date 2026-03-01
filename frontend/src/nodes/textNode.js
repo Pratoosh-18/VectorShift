@@ -1,10 +1,16 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Position } from 'reactflow';
 import { BaseNode } from './BaseNode';
+import { useStore } from '../store/useStore';
 
 export const TextNode = ({ id, data }) => {
-  const [currText, setCurrText] = useState(data?.text || '{{input}}');
+  const updateNodeField = useStore((s) => s.updateNodeField);
+  const [currText, setCurrText] = useState(data?.text ?? '{{input}}');
   const textareaRef = useRef(null);
+
+  useEffect(() => {
+    updateNodeField(id, 'text', currText);
+  }, [id, currText, updateNodeField]);
 
   const variables = useMemo(() => {
     const regex = /\{\{\s*([a-zA-Z_]\w*)\s*\}\}/g;
@@ -40,8 +46,12 @@ export const TextNode = ({ id, data }) => {
     { type: 'source', position: Position.Right, id: `${id}-output` },
   ];
 
+  const outputs = [
+    { name: 'output', type: 'Text', description: 'The processed text with variables resolved' },
+  ];
+
   return (
-    <BaseNode id={id} title="Text" handles={handles} className="node-text">
+    <BaseNode id={id} title="Text" handles={handles} className="node-text" outputs={outputs}>
       <div className="text-node-content">
         <textarea
           ref={textareaRef}
